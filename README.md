@@ -13,7 +13,7 @@ appointments, and hospital operations efficiently.
 ## Tech Stack
 ### Frontend
 - React
-- HTML, CSS, JavaScript
+- HTML, CSS, TypeScript
 
 ### Backend
 - Spring Boot
@@ -25,7 +25,7 @@ appointments, and hospital operations efficiently.
 
 ## Project Structure
 Hospital-Management-System/
-├── FrontEnd/
+├── FrontEnd/hms/
 ├── BackEnd/
 └── README.md
 
@@ -41,10 +41,6 @@ Hospital-Management-System/
 2. Run `npm install`
 3. Run `npm start`
 4. App runs on port 3000
-
-## Future Enhancements
-- Payment gateway
-- Admin analytics dashboard
 
 ## Author
 Harshit Singh  
