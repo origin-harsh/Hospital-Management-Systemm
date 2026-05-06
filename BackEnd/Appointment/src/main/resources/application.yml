@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: Appointment
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/appointmentdb
+    username: root
+    password: Marshal9758@
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      ProfileMS:
+        registerHealthIndicator: true
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 5
+
+feign:
+  circuitbreaker:
+    enabled: true
+
+server:
+  port: 9200

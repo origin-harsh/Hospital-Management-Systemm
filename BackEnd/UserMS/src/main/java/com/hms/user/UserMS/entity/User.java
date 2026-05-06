@@ -1,0 +1,38 @@
+package com.hms.user.UserMS.entity;
+
+
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+import com.hms.user.UserMS.dto.Roles;
+import com.hms.user.UserMS.dto.UserDTO;
+
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+    private String name;
+    @Column(unique = true)
+    private String email;
+    private String password;
+    private Roles role;
+    private Long profileId;
+    
+    
+    public UserDTO toDTO() {
+        return new UserDTO(this.Id, this.name, this.email, this.password, this.role, this.profileId);
+    }
+}
