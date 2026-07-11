@@ -14,5 +14,10 @@ const updatePatient = async(patient:any)=>{
     .catch((error:any)=>{throw error}); 
 }
 
-export {getPatient, updatePatient}
+const getAllPatients = async()=>{
+    return AxoisInstance.get('/profile/patient/getAll')
+    .then((response:any)=>response.data)
+    .catch((error:any)=>{throw error});
+}
 
+export {getPatient, updatePatient, getAllPatients}

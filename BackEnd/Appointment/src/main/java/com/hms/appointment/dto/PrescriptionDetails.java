@@ -15,6 +15,7 @@ public class PrescriptionDetails {
     private Long patientId;
     private Long doctorId;
     private String doctorName;
+    private String patientName;
     private Long appointmentId;
     private LocalDateTime prescriptionDate;
     private String notes;

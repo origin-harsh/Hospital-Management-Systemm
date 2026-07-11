@@ -25,6 +25,7 @@ public class Doctor {
     @Column(unique = true)
     private String email;
     private LocalDate dob;
+    private Long ProfilePictureId;
     private String gender;
     private String phone;
     private String address;
@@ -35,6 +36,6 @@ public class Doctor {
     private String totalExp;
 
     public DoctorDTO toDTO() {
-        return new DoctorDTO(this.Id, this.name, this.email, this.dob, this.gender, this.phone, this.address, this.licenseNo, this.specialization, this.department, this.totalExp);
+        return new DoctorDTO(this.Id, this.name, this.email, this.dob, this.ProfilePictureId, this.gender, this.phone, this.address, this.licenseNo, this.specialization, this.department, this.totalExp);
     }
 }

@@ -17,5 +17,10 @@ const getDoctorsDropdown = async()=>{
     .then((response:any)=>response.data)
     .catch((error:any)=>{throw error});
 }
+const getAllDoctors = async()=>{
+    return AxoisInstance.get('/profile/doctor/getAll')
+    .then((response:any)=>response.data)
+    .catch((error:any)=>{throw error}); 
+}
 
-export {getdoctor, updatedoctor, getDoctorsDropdown}
+export {getdoctor, updatedoctor, getDoctorsDropdown, getAllDoctors}

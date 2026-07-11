@@ -19,9 +19,12 @@ public class SaleitemServiceImpl implements SaleitemService {
 
 
     private final SaleItemRepository saleItemRepository;
+    private final MedicineInventoryService medicineInventoryService;
+    private final MedicineService medicineService;
 
     @Override
     public Long createSaleitem(SaleitemDTO saleitemDTO) throws HMSException {
+        saleitemDTO.setUnitPrice(medicineService.getMedicineById(saleitemDTO.getMedicineId()).getUnitprice());
         return saleItemRepository.save(saleitemDTO.toEntity()).getId();
     }
 
@@ -31,6 +34,11 @@ public class SaleitemServiceImpl implements SaleitemService {
         saleitemDTOs.stream().map((x)->{
             x.setSaleId(saleId);
             x.setMedicineId(medicineId);
+            try {
+                x.setUnitPrice(medicineService.getMedicineById(medicineId).getUnitprice());
+            } catch (HMSException e) {
+                e.printStackTrace();
+            }
             return x.toEntity();
         }).forEach(saleItemRepository::save);
     }
@@ -52,6 +60,21 @@ public class SaleitemServiceImpl implements SaleitemService {
     @Override
     public List<SaleitemDTO> getSaleitemBySaleId(Long id) throws HMSException {
        return saleItemRepository.findBySaleId(id).stream().map(Saleitem::toDTO).toList();
+    }
+
+    @Override
+    public void createSaleitems(Long saleId, List<SaleitemDTO> saleitemDTOs) throws HMSException {
+       
+        saleitemDTOs.stream().map((x)->{
+            x.setSaleId(saleId);
+            try {
+                x.setUnitPrice(medicineService.getMedicineById(x.getMedicineId()).getUnitprice());
+            } catch (HMSException e) {
+            
+                e.printStackTrace();
+            }
+            return x.toEntity();
+        }).forEach(saleItemRepository::save);
     }
     
 }

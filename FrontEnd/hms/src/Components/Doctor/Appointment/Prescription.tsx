@@ -12,6 +12,7 @@ import { useDisclosure } from '@mantine/hooks';
 import MedicineCard from './MedicineCard';
 
 const Prescription = ({appointment}:any) => {
+    const [view, setView] = useState("table");
 
     const [data,setdata] = useState<any[]>([]);
     const [opened, { open, close }] = useDisclosure(false);
@@ -84,7 +85,7 @@ const Prescription = ({appointment}:any) => {
     
   return (
     <div>
-        <DataTable
+        {<DataTable
                 stripedRows
                 value={data}
                 filters={filters} 
@@ -147,7 +148,7 @@ const Prescription = ({appointment}:any) => {
                   body={actionBodyTemplate}
                 />
         
-              </DataTable>
+              </DataTable>}
       <Modal opened={opened} size="auto" onClose={close} title="Medicine" centered>
         <div className="grid gap-4 grid-cols-2">
             {medicines.map((med: any) => (

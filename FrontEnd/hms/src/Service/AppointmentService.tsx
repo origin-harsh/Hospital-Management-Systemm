@@ -58,4 +58,14 @@ const isReportExist = (appointmentId:any) =>{
     .then((response:any)=>response.data)
     .catch((error:any)=>{throw error});
 }
-export {scheduleAppointment, cancelAppointment, getAppointment, getApointmentDetails, getAppointmentsByPatientId, getAppointmentsByDoctorId, createAppointmentReport, getRecordByPatientId,getPrescriptionByPatientId,isReportExist,completedAppointment};
+const getAllPrescription = ()=>{
+    return AxoisInstance.get("/appointment/record/getAllPrescription")
+    .then((response:any)=>response.data)
+    .catch((error:any)=>{throw error});
+}
+const getMedicineByPrescriptionId = async(Id:any)=>{
+    return AxoisInstance.get("/appointment/record/getMedicineByPrescriptionId/" + Id)
+    .then((response:any)=>response.data)
+    .catch((error:any)=>{throw error});
+}
+export {scheduleAppointment, cancelAppointment, getAppointment, getApointmentDetails, getAppointmentsByPatientId, getAppointmentsByDoctorId, createAppointmentReport, getRecordByPatientId,getPrescriptionByPatientId,isReportExist,completedAppointment,getAllPrescription,getMedicineByPrescriptionId};

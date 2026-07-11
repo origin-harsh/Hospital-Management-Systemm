@@ -32,6 +32,7 @@ public class Patient {
     @Column(unique = true)
     private String email;
     private LocalDate dob;
+    private Long ProfilePictureId;
     private String gender;
     private String phone;
     private String address;
@@ -42,7 +43,7 @@ public class Patient {
     private String chronicDisease;
     
      public PatientDTO toDTO() {
-        return new PatientDTO(this.Id, this.name, this.email, this.dob, this.gender, this.phone, this.address, this.aadharNo, this.bloodGroup, this.allergies, this.chronicDisease);
+        return new PatientDTO(this.Id, this.name, this.email, this.dob, this.ProfilePictureId, this.gender, this.phone, this.address, this.aadharNo, this.bloodGroup, this.allergies, this.chronicDisease);
     }
     
 }

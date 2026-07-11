@@ -1,5 +1,5 @@
 package com.hms.pharmacy.dto;
 
 public enum StockStatus {
-    VALID, EXPIRED, LOW_STOCK
+    VALID, EXPIRED, LOW_STOCK, SOLD_OUT
 }

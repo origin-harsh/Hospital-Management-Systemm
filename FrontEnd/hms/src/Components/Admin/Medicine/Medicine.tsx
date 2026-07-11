@@ -13,6 +13,7 @@ import { formatDate } from '../../Utility/Date';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { addMedicine, getAllMedicines, updateMedicine } from '../../../Service/MedicineService';
 import { capatilizedFristLetter } from '../../Utility/OtherUtility';
+import { medicineTypes } from '../../../Data/DropDownData';
 
 type Medicine = {
   name: string;
@@ -260,7 +261,7 @@ const Medicine = () => {
             <TextInput {...form.getInputProps('name')} label="Medicine" placeholder="Enter medicine name" withAsterisk/>
             <TextInput {...form.getInputProps('dosage')} label="Dosage" placeholder="Enter dosage 50mg, 100mg etc." />
             <Select {...form.getInputProps('category')} label="Category" placeholder="Select category" data={["ANALGESIC","ANTIBIOTIC","ANTIVIRAL","ANTIFUNGAL","ANTIPYRETIC","ANTACID","ANTISEPTIC","VITAMIN","SUPPLEMENT","HORMONE","VACCINE"]} withAsterisk />
-            <Select {...form.getInputProps('type')} label="Type" placeholder="Select type" data={["TABLET", "CAPSULE", "SYRUP", "INJECTION", "OINTMENT", "DROPS", "INHALER"]} withAsterisk />
+            <Select {...form.getInputProps('type')} label="Type" placeholder="Select type" data={medicineTypes} withAsterisk />
             <TextInput {...form.getInputProps('manufacturer')} label="Manufacturer" placeholder="Enter manufacturer name" withAsterisk />
             <NumberInput min={0} clampBehavior='strict' {...form.getInputProps('unitprice')} label="Unit Price" placeholder="Enter unit price" withAsterisk />
           </Fieldset>

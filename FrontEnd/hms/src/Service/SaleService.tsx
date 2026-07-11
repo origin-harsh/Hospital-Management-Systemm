@@ -29,4 +29,5 @@ const getAllSales = async()=>{
 }
 
 
+
 export {addSale, getSale, updateSale, getAllSales, getSaleItems};

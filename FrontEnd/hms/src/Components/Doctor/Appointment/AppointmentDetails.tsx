@@ -105,7 +105,7 @@ const AppointmentDetails = () => {
       </Tabs.List>
      <Divider my="md" />
       <Tabs.Panel value="medical">
-       Hii
+       <span className='text-gray-500'>Under Construction</span>
       </Tabs.Panel>
 
       <Tabs.Panel value="prescription">

@@ -64,6 +64,11 @@ public class SaleAPI {
     @GetMapping("/getByPrescriptionId/{prescriptionId}")
     public ResponseEntity<SaleDTO> getSaleByPrescriptionId(@PathVariable Long prescriptionId) throws HMSException {
         return new ResponseEntity<>(saleService.getSaleByPrescriptionId(prescriptionId),HttpStatus.OK);
-    }   
+    }  
+    
+    @GetMapping("/getAll")
+    public ResponseEntity<List<SaleDTO>> getAllSales() throws HMSException {
+        return new ResponseEntity<>(saleService.getAllSales(),HttpStatus.OK);
+    }
     
 }

@@ -29,7 +29,7 @@ public class Medicine {
     private MedicineCategory category;  
     private String manufacturer;
     private Integer stock;
-    private Integer unitprice;
+    private Double unitprice;
     private LocalDateTime createdAt;
     
 

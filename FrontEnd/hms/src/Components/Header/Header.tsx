@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeJwt } from '../../Slice/JwtSlice';
 import { removeUser } from '../../Slice/userSlice';
+import SideDraw from '../SideDraw/SideDraw';
+import { useMediaQuery } from '@mantine/hooks';
 
 
 const Header = () => {
@@ -18,11 +20,14 @@ const Header = () => {
     dispatch(removeUser());
 
   }
+   const matches = useMediaQuery('(max-width: 768px)');
   return (
     <div className='bg-light shadow-lg w-full h-16 flex justify-between px-5 items-center'>
-         <ActionIcon variant="transparent" size="lg" aria-label='Settings'>
+      {matches ? <SideDraw/> : null}
+      <div></div>
+         {/* <ActionIcon variant="transparent" size="lg" aria-label='Settings'>
             <IconLayoutSidebarLeftCollapseFilled style={{width:'90%', height:'90%'}} stroke={1.5} />
-        </ActionIcon>
+        </ActionIcon> */}
         <div className='flex items-center gap-5'>
          {jwt?<Button color='red' onClick={handleLogout}>Logout</Button>:  <Link to="/login"><Button>Login</Button></Link>}
         {jwt &&<><ActionIcon variant="transparent" size="md" aria-label='Settings'>

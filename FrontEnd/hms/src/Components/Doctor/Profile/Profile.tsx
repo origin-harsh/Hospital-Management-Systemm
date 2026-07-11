@@ -13,6 +13,8 @@ import { getdoctor, updatedoctor } from '../../../Service/DoctorProfileService'
 import { formatDate } from '../../Utility/Date'
 import { useForm } from '@mantine/form';
 import { errorNotification, successNotification } from '../../Utility/NotificationUtil'
+import { DropzoneButton } from '../../Utiliti/dropzone/DropzoneButton'
+import useProtectedImage from '../../Utiliti/dropzone/useProtectedImage'
 
 
 const Profile = () => {
@@ -48,6 +50,7 @@ useEffect(() => {
       dob: "",
       phone: "",
       address: "",
+      profilePictureId: "",
       licenseNo: "",
       specialization: "",
       department: "",
@@ -85,12 +88,14 @@ useEffect(() => {
     });
    
   }
+
+  const url = useProtectedImage(profile.profilePictureId);
   return (
     <div className='p-10'>
         <div className='flex justify-between items-center mb-5'>
             <div className='flex gap-5 items-center'>
               <div className='flex flex-col items-center gap-3'>
-                 <Avatar className='border-4 border-dashed border-gray-500' variant='filled' src="/Doctor.png" size={150} alt="it's me" />
+                 <Avatar className='border-4 border-dashed border-gray-500' variant='filled' src={url} size={150} alt="it's me" />
                  {editMode && <Button size="sm" onClick={open} variant='filled'>Upload</Button>}
               </div>
                
@@ -180,6 +185,8 @@ useEffect(() => {
       
         </div>
            <Modal centered opened={opened} onClose={close} title={<span className='text-xl font-medium'>Upload Profile Picture</span>}>
+
+           <DropzoneButton close={close} form={form} profilePictureId="profilePictureId" />
         
       </Modal>
     </div>

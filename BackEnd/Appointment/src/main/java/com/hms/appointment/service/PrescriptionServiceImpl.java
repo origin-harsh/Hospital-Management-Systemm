@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.hms.appointment.clients.ProfileClient;
 import com.hms.appointment.dto.Doctorname;
+import com.hms.appointment.dto.PatientName;
 import com.hms.appointment.dto.PrescriptionDTO;
 import com.hms.appointment.dto.PrescriptionDetails;
 import com.hms.appointment.entity.Prescription;
@@ -73,6 +74,38 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 details.setDoctorName("Unknown Doctor");
             }
         });
+
+        return prescriptionDetails;
+    }
+
+    @Override
+    public List<PrescriptionDetails> getAllPrescription() throws HMSException {
+        List<Prescription> prescriptions = (List<Prescription>)prescriptionRepository.findAll();
+        List<PrescriptionDetails> prescriptionDetails = prescriptions.stream().map(Prescription::toDetails).toList();
+
+        List<Long> doctorIds = prescriptionDetails.stream().map(PrescriptionDetails::getDoctorId).distinct().toList();
+        List<Long> patientIds = prescriptionDetails.stream().map(PrescriptionDetails::getPatientId).distinct().toList();
+        List<Doctorname> doctorNames = profileClient.getDoctorByIds(doctorIds);
+        List<PatientName> patientNames = profileClient.getPatientByIds(patientIds);
+        Map<Long, String> doctorIdNameMap = doctorNames.stream().collect(Collectors.toMap(Doctorname::getId, Doctorname::getName));
+        Map<Long, String> patientIdNameMap = patientNames.stream().collect(Collectors.toMap(PatientName::getId, PatientName::getName));
+        prescriptionDetails.forEach(details->{
+            String doctorName = doctorIdNameMap.get(details.getDoctorId());
+            String patientName = patientIdNameMap.get(details.getPatientId());
+            if(doctorName != null){
+                details.setDoctorName(doctorName);
+            }
+            else{
+                details.setDoctorName("Unknown Doctor");
+            }
+            if(patientName != null){
+                details.setPatientName(patientName);
+            }
+            else{
+                details.setPatientName("Unknown Patient");
+            }
+        });
+        
 
         return prescriptionDetails;
     }

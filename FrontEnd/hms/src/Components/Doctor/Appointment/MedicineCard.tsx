@@ -34,9 +34,6 @@ const MedicineCard = ({ medicine }: any) => {
         <Text size="sm">
           <b>Duration:</b> {medicine.duration} days
         </Text>
-        <Text size="sm">
-          <b>Route:</b> {medicine.route}
-        </Text>
       </Group>
 
       <Divider my="sm" />

@@ -12,6 +12,7 @@ import com.hms.ProfileMS.exception.HMSException;
 import com.hms.ProfileMS.repository.Doctorrepo;
 import com.hms.ProfileMS.repository.PatientRepo;
 import com.hms.ProfileMS.dto.DoctorDropDown;
+import com.hms.ProfileMS.entity.Doctor;
 
 @Service
 public class DoctorServiceImpl implements DoctorService  {
@@ -60,6 +61,11 @@ public class DoctorServiceImpl implements DoctorService  {
     @Override
     public List<DoctorDropDown> getDoctorByIds(List<Long> ids) throws HMSException {
         return doctorRepo.findAllDoctorDropDownsByIds(ids);
+    }
+
+    @Override
+    public List<DoctorDTO> getAllDoctors() throws HMSException {
+        return ((List<Doctor>)doctorRepo.findAll()).stream().map(Doctor::toDTO).toList();
     }
     
 }

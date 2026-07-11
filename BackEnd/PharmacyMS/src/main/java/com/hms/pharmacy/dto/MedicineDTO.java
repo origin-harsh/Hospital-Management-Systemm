@@ -10,19 +10,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicineDTO {
-     private Long id;
+    private Long id;
     private String name;
     private String dosage;
     private MedicineType type;    
     private MedicineCategory category;  
     private String manufacturer;
     private Integer stock;
-    private Integer unitprice;
+    private Double unitprice;
     private LocalDateTime createdAt;
 
     public Medicine toEntity(){

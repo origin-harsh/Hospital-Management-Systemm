@@ -114,6 +114,42 @@ public class MedicineInventoryServiceImpl implements MedicineInventoryService{
         
     }
 
+    @Override
+    @Transactional
+    public String sellStock(Long medicineId, Integer quantity) throws HMSException {
+       List<MedicineInventory> inventories = medicineInventoryRepository.findByMedicineIdAndExpiryDateAfterAndQuantityGreaterThanAndStockStatusOrderByExpiryDateAsc(medicineId, LocalDate.now(), 0,StockStatus.VALID);
+       if(inventories.isEmpty()){
+        throw new HMSException("OUT_OF_STOCK");
+       }
+       StringBuilder batchNo = new StringBuilder();
+       int remainingQuantity = quantity;
+       for(MedicineInventory inventory : inventories){
+        if(remainingQuantity <= 0){
+            break;
+        }
+        int availableQuantity = inventory.getQuantity();
+        if(availableQuantity <= remainingQuantity){
+            batchNo.append(String.format("Batch %s : %d, ", inventory.getBatchNo(), availableQuantity));
+            inventory.setQuantity(0);
+            remainingQuantity -= availableQuantity;
+            inventory.setStockStatus(StockStatus.SOLD_OUT);
+
+       }else{
+        batchNo.append(String.format("Batch %s : %d, ", inventory.getBatchNo(), remainingQuantity));
+        inventory.setQuantity(availableQuantity - remainingQuantity);
+        remainingQuantity = 0;
+       }
+    
+       }
+       if(remainingQuantity > 0){
+        throw new HMSException("INSUFFICIENT_STOCK");
+       }
+       medicineService.removeStock(medicineId, quantity);
+        medicineInventoryRepository.saveAll(inventories);
+        return batchNo.toString();
+    }
+    
+
 
     
     

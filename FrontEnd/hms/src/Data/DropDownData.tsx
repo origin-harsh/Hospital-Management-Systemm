@@ -158,7 +158,27 @@ const allDosageFrequencies = [
   "1-1-0",
   "1-1-1"
 ];
+const frqMap: Record<string, number> = {
+  "0-0-0":0,
+  "0-0-1":1,
+  "0-1-0":1,
+  "0-1-1":2,
+  "1-0-0":1,
+  "1-0-1":2,
+  "1-1-0":2,
+  "1-1-1":3
+
+}
+const medicineTypes = [
+  { label: "Tablet", value: "TABLET" },
+  { label: "Capsule", value: "CAPSULE" },
+  { label: "Syrup", value: "SYRUP" },
+  { label: "Injection", value: "INJECTION" },
+  { label: "Ointment", value: "OINTMENT" },
+  { label: "Drops", value: "DROPS" },
+  { label: "Inhaler", value: "INHALER" }
+];
 const appointmentReason: string[] = ["General Checkup", "Follow-up Visit", "Prescription Refill", "Lab Test Results", "Specialist Consultation", "Vaccination", "Health Concern", "Physical Examination", "Mental Health Support", "Chronic Condition Management", "Surgical Consultation", "Emergency Visit", "Second Opinion", "Pre-Operative Assessment", "Post-Operative Follow-up"];
 const doctorSpecializations: string[] = ["General Physician", "Cardiologist", "Dermatologist", "Neurologist", "Orthopedic", "Pediatrician", "Gynecologist", "Psychiatrist", "Ophthalmologist", "ENT Specialist", "Dentist", "Urologist", "Gastroenterologist", "Endocrinologist", "Pulmonologist", "Oncologist", "Radiologist", "Anesthesiologist", "Nephrologist", "Rheumatologist"];
 const doctorDepartments: string[] = ["General Medicine","Cardiology","Dermatology","Neurology","Orthopedics","Pediatrics","Gynecology","Psychiatry","Ophthalmology","ENT","Dentistry","Urology","Gastroenterology","Endocrinology","Pulmonology","Oncology","Radiology","Anesthesiology","Nephrology","Rheumatology","Emergency Medicine","Pathology","Physiotherapy"];
-export { bloodGroups, doctorSpecializations, doctorDepartments, bloodGroup, appointmentReason ,gender, symptoms, tests, allDosageFrequencies};
+export { bloodGroups,medicineTypes, doctorSpecializations, doctorDepartments, bloodGroup, appointmentReason ,gender, symptoms, tests, allDosageFrequencies, frqMap};

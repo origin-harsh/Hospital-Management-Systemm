@@ -16,7 +16,7 @@ import { Slider, SliderChangeEvent } from 'primereact/slider';
 import { Tag } from 'primereact/tag';
 import { TriStateCheckbox, TriStateCheckboxChangeEvent } from 'primereact/tristatecheckbox';
 import { ActionIcon, Divider, LoadingOverlay, Modal, SegmentedControl, Select, Textarea, TextInput } from '@mantine/core';
-import { IconCheck, IconEdit, IconEye, IconPlus, IconSearch, IconTrash } from '@tabler/icons-react';
+import { IconCheck, IconEdit, IconEye, IconLayoutGrid, IconPlus, IconSearch, IconTable, IconTrash } from '@tabler/icons-react';
 import { Button,Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { getDoctorsDropdown } from '../../../Service/DoctorProfileService';
@@ -33,6 +33,7 @@ import { formatDate, formatDateTime } from '../../Utility/Date';
 import { modals } from '@mantine/modals';
 import { Toolbar } from 'primereact/toolbar';
 import { useNavigate } from 'react-router-dom';
+import ApCard from './ApCard';
 
 
 
@@ -113,6 +114,7 @@ const Appointment=() => {
     const [Doctors, setDoctors] = useState<any>([]);
     const [editMode, setEditMode] = useState(false);
     const [tab, setTab] = useState<string>('Today');
+    const [view, setView] = useState("table");
   
 
    
@@ -314,8 +316,19 @@ const Appointment=() => {
         return <div></div>
     };
 
-    const rightToolbarTemplate = () => {
-        return  <TextInput leftSection={<IconSearch />} fw={500} value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
+   const rightToolbarTemplate = () => {
+        return <div className="flex items-center gap-5"> 
+        <SegmentedControl
+            value={view}
+            color='primary'
+            onChange={setView}
+            data={[
+              { label: <IconTable/>, value: 'table' },
+              { label: <IconLayoutGrid/>, value: 'card' }
+            ]}
+          />
+
+        <TextInput leftSection={<IconSearch />} fw={500} value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" /></div>
     };
     const centerToolbarTemplate = () => {
         return (
@@ -346,7 +359,7 @@ const Appointment=() => {
        
     <div className="card">
       <Toolbar className="mb-4" start={centerToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
-      <DataTable
+      {view === "table" ? <DataTable
         stripedRows
         value={filteredAppointments}
         size="small"
@@ -430,7 +443,14 @@ const Appointment=() => {
           body={actionBodyTemplate}
         />
 
-      </DataTable>
+      </DataTable> :<div className='grid grid-cols-4 gap-5'>
+        {filteredAppointments.length === 0 ? <div className='col-span-4 text-center text-gray-500'>No appointments found.</div>:
+
+        filteredAppointments?.map((appointment:any)=>(
+          <ApCard key={appointment.id} {...appointment}/>
+        ))
+        }
+      </div>}
       {/* <Modal opened={opened} size="lg" onClose={close} title={
         <div className='text-xl font-semibold text-primary-500'>Schedule Appointment</div>} centered> 
         <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} /> 

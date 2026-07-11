@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.hms.appointment.config.FeignInterceptor;
 import com.hms.appointment.dto.DoctorDTO;
 import com.hms.appointment.dto.PatientDTO;
+import com.hms.appointment.dto.PatientName;
 import com.hms.appointment.dto.Doctorname;
 import java.util.List;
 
@@ -24,5 +25,8 @@ public interface ProfileClient {
 
     @GetMapping("/profile/doctor/getDoctorById")
     List<Doctorname> getDoctorByIds(@RequestParam List<Long> ids);
+    
+    @GetMapping("/profile/patient/getPatientById")
+    List<PatientName> getPatientByIds(@RequestParam List<Long> ids);
     
 }

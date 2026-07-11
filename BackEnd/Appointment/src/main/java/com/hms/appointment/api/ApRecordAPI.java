@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.hms.appointment.dto.ApRecordDTO;
+import com.hms.appointment.dto.MedicineDTO;
 import com.hms.appointment.dto.PrescriptionDetails;
 import com.hms.appointment.dto.RecordDetails;
 import com.hms.appointment.exception.HMSException;
 import com.hms.appointment.service.ApRecordService;
+import com.hms.appointment.service.MedicineService;
+import com.hms.appointment.service.MedicineServiceImpl;
 import com.hms.appointment.service.PrescriptionService;
 
 import feign.Response;
@@ -46,6 +49,8 @@ public class ApRecordAPI {
     private final ApRecordService apRecordService;
     
     private final PrescriptionService prescriptionService;
+
+    private final MedicineService medicineService;
 
 
     @PostMapping("/create")
@@ -85,5 +90,18 @@ public class ApRecordAPI {
     public ResponseEntity<List<PrescriptionDetails>> getPrescriptionByPatientId(@PathVariable Long patientId) throws HMSException {
         return new ResponseEntity<>(prescriptionService.getPrescriptionDeatilsByPatientId(patientId),HttpStatus.OK);
     }
+
+    @GetMapping("/getAllPrescription")
+    public ResponseEntity<List<PrescriptionDetails>> getAllPrescription() throws HMSException {
+        return new ResponseEntity<>(prescriptionService.getAllPrescription(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/getMedicineByPrescriptionId/{Id}")
+    public ResponseEntity<List<MedicineDTO>> getMedicineByPrescriptionId(@PathVariable Long Id) {
+        return new ResponseEntity<>(medicineService.getMedicinesByPrescriptionId(Id),HttpStatus.OK);
+
+        
+    }
+    
 
 }

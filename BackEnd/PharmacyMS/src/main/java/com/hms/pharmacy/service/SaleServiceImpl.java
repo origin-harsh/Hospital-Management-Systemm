@@ -1,13 +1,18 @@
 package com.hms.pharmacy.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.hms.pharmacy.dto.SaleDTO;
 import com.hms.pharmacy.dto.SaleRequest;
+import com.hms.pharmacy.dto.SaleitemDTO;
+import com.hms.pharmacy.entity.Medicine;
 import com.hms.pharmacy.entity.Sale;
 import com.hms.pharmacy.exception.HMSException;
 import com.hms.pharmacy.repository.SaleRepository;
-
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 
@@ -16,14 +21,24 @@ import lombok.RequiredArgsConstructor;
 public class SaleServiceImpl implements SaleService {
     private final SaleRepository saleRepository;
 
+
     private final SaleitemService saleitemService;
+    private final MedicineInventoryService medicineInventoryService;
 
     @Override
-    public Long createSale(SaleRequest saleDTO) throws HMSException {
-        if(saleRepository.existsByPrescriptionId(saleDTO.getPrescriptionId()))
+    @Transactional
+    public Long createSale(SaleRequest dto) throws HMSException {
+        if(dto.getPrescriptionId() != null && saleRepository.existsByPrescriptionId(dto.getPrescriptionId())){
             throw new HMSException("SALE_ALREADY_EXISTS");
-        saleDTO.setSaleDate(java.time.LocalDateTime.now());
-        return saleRepository.save(saleDTO.toEntity()).getId();
+        }
+        for(SaleitemDTO saleItem: dto.getSaleItems()){
+            saleItem.setBatchNo(
+            medicineInventoryService.sellStock(saleItem.getMedicineId(), saleItem.getQuantity()));
+        }
+        Sale sale = new Sale(null, dto.getPrescriptionId(), dto.getBuyerName(), dto.getBuyerContact(), LocalDateTime.now(), dto.getTotalAmount());
+        sale = saleRepository.save(sale);
+        saleitemService.createSaleitems(sale.getId(), dto.getSaleItems());
+        return sale.getId();
     }
 
     @Override
@@ -42,6 +57,11 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public SaleDTO getSaleByPrescriptionId(Long prescriptionId) throws HMSException {
         return saleRepository.findByPrescriptionId(prescriptionId).orElseThrow(() -> new HMSException("SALE_NOT_FOUND")).toDTO();
+    }
+
+    @Override
+    public List<SaleDTO> getAllSales() throws HMSException {
+         return ((List<Sale>) saleRepository.findAll()).stream().map(Sale::toDTO).toList();
     }
     
 }

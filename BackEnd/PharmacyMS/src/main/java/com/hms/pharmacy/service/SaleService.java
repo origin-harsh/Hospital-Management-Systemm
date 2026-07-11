@@ -1,5 +1,7 @@
 package com.hms.pharmacy.service;
 
+import java.util.List;
+
 import com.hms.pharmacy.dto.SaleDTO;
 import com.hms.pharmacy.dto.SaleRequest;
 import com.hms.pharmacy.entity.Sale;
@@ -13,6 +15,8 @@ public interface SaleService {
     SaleDTO getSale(Long id) throws HMSException;
 
     SaleDTO getSaleByPrescriptionId(Long prescriptionId) throws HMSException;
+
+    List<SaleDTO> getAllSales() throws HMSException;
     
 
     

@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
 const links = [
+    {name: 'Dashboard', url: '/patient/dashboard', icon: <IconLayoutDashboardFilled stroke={1.5}/>},
     {name: 'Profile', url: '/patient/profile', icon: <IconUser stroke={1.5}/>},
     {name: 'Appointments', url: '/patient/appointments', icon: <IconCalendarClock  stroke={1.5}/>},
     {name:"Pharmacy", url:'/patient/pharmacy', icon:<IconVaccine  stroke={1.5}/>}

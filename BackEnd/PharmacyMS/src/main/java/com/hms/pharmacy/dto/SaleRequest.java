@@ -11,5 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SaleRequest {
     private Long prescriptionId;
+    private String buyerName;
+    private String buyerContact;
+    private Double totalAmount;
     private List<SaleitemDTO> saleItems;
 }

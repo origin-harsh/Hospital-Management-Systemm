@@ -17,6 +17,7 @@ public class PatientDTO {
     private String name;
     private String email;
     private LocalDate dob;
+    private Long ProfilePictureId;
     private String gender;
     private String phone;
     private String address;
@@ -26,6 +27,6 @@ public class PatientDTO {
     private String chronicDisease;
     
     public Patient toEntity() {
-        return new Patient(this.Id, this.name, this.email, this.dob, this.gender, this.phone, this.address, this.aadharNo, this.bloodGroup, this.allergies, this.chronicDisease);
+        return new Patient(this.Id, this.name, this.email, this.dob, this.ProfilePictureId, this.gender, this.phone, this.address, this.aadharNo, this.bloodGroup, this.allergies, this.chronicDisease);
     }
 }

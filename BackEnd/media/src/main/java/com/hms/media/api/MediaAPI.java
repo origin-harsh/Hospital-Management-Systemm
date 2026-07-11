@@ -36,13 +36,13 @@ public class MediaAPI {
     public ResponseEntity<MediaFileDTO> uploadMedia(@RequestParam("file") MultipartFile file) {
         try {
             MediaFileDTO mediaFileDTO = mediaService.saveFile(file);
-            return ResponseEntity.status(HttpStatus.CREATED).body(mediaFileDTO);
+            return  ResponseEntity.status(HttpStatus.CREATED).body(mediaFileDTO);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("get/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
         Optional<MediaFile> mediaFileOptional = mediaService.getFile(id);
         if (mediaFileOptional.isPresent()) {
